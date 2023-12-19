@@ -1,5 +1,5 @@
 <?php
-include 'StorageController.php';
+require_once 'HomeController.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];

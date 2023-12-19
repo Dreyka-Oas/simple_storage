@@ -1,4 +1,4 @@
 <?php
-                                            $totalSearchResults = count($searchData);
-                                            echo 'Total search results: ' . $totalSearchResults;
-                                            ?>
+    $totalSearchResults = count($searchData);
+    echo 'Total search results: ' . $totalSearchResults;
+?>

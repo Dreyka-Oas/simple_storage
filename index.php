@@ -1,12 +1,11 @@
 <?php
 
-include 'controller/StorageController.php';
-require_once 'controller/StorageController.php';
+require_once 'controller/HomeController.php';
 
 $storageController = new StorageController();
 
 $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-$perPage = 50;
+$perPage = 25;
 $startFrom = ($page - 1) * $perPage;
 
 if (isset($_POST['removeAll'])) {

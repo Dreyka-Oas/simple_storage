@@ -1,29 +1,39 @@
 <?php
+
 require_once '../vendor/autoload.php';
-require_once 'StorageController.php';
-
+require_once 'HomeController.php';
+error_reporting(E_ALL); ini_set("display_errors", 1);
 if (isset($_POST['generateFaker'])) {
-    $faker = Faker\Factory::create("fr_FR");
-    $fakerNumber = $_POST['fakerNumber'];
+    $jsonContent = file_get_contents('../config/tools_faker.json');
+    $data = json_decode($jsonContent, true);
 
-    $minStorage = $_POST['minStorage'];
-    $maxStorage = $_POST['maxStorage'];
+    if (isset($data['tools']) && is_array($data['tools'])) {
+        $fakerNumber = $_POST['fakerNumber'];
 
-    $maxStorage = ($maxStorage < 1) ? 1000 : $maxStorage;
+        $minStorage = $_POST['minStorage'];
+        $maxStorage = $_POST['maxStorage'];
 
-    $storageController = new StorageController();
+        $maxStorage = ($maxStorage < 1) ? 1000 : $maxStorage;
 
-    for ($i = 0; $i < $fakerNumber; $i++) {
-        $name = $faker->name;
-        $description = $faker->sentence;
-        $storage = $faker->numberBetween($minStorage, $maxStorage);
+        $storageController = new StorageController();
 
-        $storageController->addElement($name, $description, $storage);
+        $faker = Faker\Factory::create();
+
+        for ($i = 0; $i < $fakerNumber; $i++) {
+            $randomTool = $data['tools'][array_rand($data['tools'])];
+
+            $name = $randomTool['name'];
+            $description = $randomTool['description'];
+            $storage = mt_rand($minStorage, $maxStorage);
+
+            $userName = $faker->name;
+            $storageController->addUser($userName, $storage);
+            $storageController->addElement($name, $description, $userName);
+        }
+        header("Location: ../index.php?addedFaker=true");
+        exit();
+    } else {
+        echo "Erreur de structure JSON ou pas de données d'outils.";
     }
-
-    header("Location: ../index.php?addedFaker=true");
-    exit();
 }
-
-
 ?>
