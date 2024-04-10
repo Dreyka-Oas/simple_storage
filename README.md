@@ -1,4 +1,4 @@
-Stock Management Project (Student Project)
+Simple Storage Project (Student Project)
 
 This small student project for stock management allows you to list, create, and generate fake data for a PostgreSQL database. The goal is to facilitate the management of items in stock by providing simple and practical features.
 Features
